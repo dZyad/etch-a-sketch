@@ -3,7 +3,7 @@ body {
 }
 
 #display {
-    border: red solid 10px;
+    border: red solid 20px;
     display: flex;
     flex-direction: column;
     height: 75vh;
@@ -15,11 +15,9 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     flex: auto;
-    border-top: black solid 1px;
 }
 
 .column {
     box-sizing: border-box;
     flex: auto;
-    border-left: black solid 1px;
 }
