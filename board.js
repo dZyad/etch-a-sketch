@@ -1,13 +1,18 @@
 const DEFAULT_MODE = 'default';
 
 let currentMode = DEFAULT_MODE;
+let odinCounter = 100;
 
 const display = document.querySelector('#display');
 const resizeButton = document.querySelector('#resize');
 const randomizeButton = document.querySelector('#randomizer');
+const defaultButton = document.querySelector('#classic');
+const odinButton = document.querySelector('#darker');
 
 resizeButton.addEventListener('click', resizeDisplay);
 randomizeButton.addEventListener('click', () => currentMode = 'randomMode');
+defaultButton.addEventListener('click', () => currentMode = DEFAULT_MODE);
+odinButton.addEventListener('click', () => currentMode = 'odinMode');
 
 createTable(16);
 
@@ -28,8 +33,10 @@ function createTable(dim) {
 function changeColor(e) {
     if ( currentMode === DEFAULT_MODE ) {
         e.target.style.backgroundColor = 'grey';
-    } else if ( currentMode === 'randomMode') {
+    } else if ( currentMode === 'randomMode' ) {
         e.target.style.backgroundColor = `rgb(${genRandom()}, ${genRandom()}, ${genRandom()})`;
+    } else if ( currentMode === 'odinMode' ) {
+        e.target.style.backgroundColor = `rgb(${getOdinColor()}% ${getOdinColor()}%, ${getOdinColor()}%)`
     }
 }
 
@@ -57,7 +64,11 @@ function resizeDisplay() {
     createTable(newValue);
 }
 
+function getOdinColor() {
+    odinCounter -= 1;
+    return `${odinCounter}`;
+}
+
 function genRandom() {
-    console.log('random')
     return Math.random() * 256;
 }
