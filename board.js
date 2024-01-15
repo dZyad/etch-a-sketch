@@ -4,8 +4,10 @@ createTable(16);
 
 const resizeButton = document.querySelector('#resize');
 let cells = document.querySelectorAll('.column');
+const randomizeButton = document.querySelector('#randomizer');
 
 resizeButton.addEventListener('click', resizeDisplay);
+randomizeButton.addEventListener('click', randomColorPixel);
 
 function createTable(dim) {
     for ( let i = 0 ; i < dim ; i++ ) {
@@ -57,4 +59,15 @@ function resizeDisplay() {
     createTable(newValue);
     cells = document.querySelectorAll('.column');
     addPixelBehavior();
+}
+
+function randomColorPixel() {
+    cells.forEach(cell => {
+        const randomRed = Math.random() * 255;
+        const randomGreen = Math.random() * 255;
+        const randomBlue = Math.random() * 255;
+        cell.addEventListener('mouseleave', () => {
+            cell.style.backgroundColor = `rgb(${randomRed}, ${randomGreen}, ${randomBlue})`;
+        });
+    })
 }
