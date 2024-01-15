@@ -26,3 +26,12 @@ body {
     flex: auto;
     background-color: #fefefe;
 }
+
+.options {
+    display: flex;
+    gap: 10px;
+}
+
+.options > button {
+    flex: 1 1 0;
+}
