@@ -1,13 +1,15 @@
+const DEFAULT_MODE = 'default';
+
+let currentMode = DEFAULT_MODE;
+
 const display = document.querySelector('#display');
-
-createTable(16);
-
 const resizeButton = document.querySelector('#resize');
-let cells = document.querySelectorAll('.column');
 const randomizeButton = document.querySelector('#randomizer');
 
 resizeButton.addEventListener('click', resizeDisplay);
-randomizeButton.addEventListener('click', randomColorPixel);
+randomizeButton.addEventListener('click', () => currentMode = 'randomMode');
+
+createTable(16);
 
 function createTable(dim) {
     for ( let i = 0 ; i < dim ; i++ ) {
@@ -16,35 +18,31 @@ function createTable(dim) {
         for ( let j = 0 ; j < dim ; j++ ) {
             let cell= document.createElement('div');
             cell.className = "column";
+            cell.addEventListener('mouseover', changeColor);
             row.appendChild(cell);
         }
         display.appendChild(row);
     }
 }
 
-addPixelBehavior();
+function changeColor(e) {
+    if ( currentMode === DEFAULT_MODE ) {
+        e.target.style.backgroundColor = 'grey';
+    } else if ( currentMode === 'randomMode') {
+        e.target.style.backgroundColor = `rgb(${genRandom()}, ${genRandom()}, ${genRandom()})`;
+    }
+}
 
 const isValidNumber = (value) => {
     return value > 0 && value < 101;
 }
+
 const newUserDisplayValue = () => {
     let newValue = +prompt("Insert a new value for the display. From 1 to 100.", "24");
     while( !isValidNumber(newValue) ) {
         newValue = +prompt("Insert a valid value from 1 to 100.", "24");
     }
     return newValue;
-}
-
-function addPixelBehavior() {
-    cells.forEach(cell => {
-        cell.addEventListener('mouseenter', () => {
-            cell.style.backgroundColor = 'black';
-        });
-
-        cell.addEventListener('mouseleave', () => {
-            cell.style.backgroundColor = 'grey';
-        });
-    });
 }
 
 function clearDisplay() {
@@ -57,17 +55,9 @@ function resizeDisplay() {
     const newValue = newUserDisplayValue();
     clearDisplay();
     createTable(newValue);
-    cells = document.querySelectorAll('.column');
-    addPixelBehavior();
 }
 
-function randomColorPixel() {
-    cells.forEach(cell => {
-        const randomRed = Math.random() * 255;
-        const randomGreen = Math.random() * 255;
-        const randomBlue = Math.random() * 255;
-        cell.addEventListener('mouseleave', () => {
-            cell.style.backgroundColor = `rgb(${randomRed}, ${randomGreen}, ${randomBlue})`;
-        });
-    })
+function genRandom() {
+    console.log('random')
+    return Math.random() * 256;
 }
