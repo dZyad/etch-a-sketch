@@ -1,19 +1,18 @@
 const DEFAULT_MODE = 'default';
 
 let currentMode = DEFAULT_MODE;
-let odinCounter = 100;
 let isPaused = true;
 
 const display = document.querySelector('#display');
 const resizeButton = document.querySelector('#resize');
 const randomizeButton = document.querySelector('#randomizer');
 const defaultButton = document.querySelector('#classic');
-const odinButton = document.querySelector('#darker');
+const eraseButton = document.querySelector('#eraser');
 
 resizeButton.addEventListener('click', resizeDisplay);
 randomizeButton.addEventListener('click', () => currentMode = 'randomMode');
 defaultButton.addEventListener('click', () => currentMode = DEFAULT_MODE);
-odinButton.addEventListener('click', () => currentMode = 'odinMode');
+eraseButton.addEventListener('click', () => currentMode = 'rubberMode');
 display.addEventListener('click', () => isPaused = !isPaused);
 
 createTable(16);
@@ -38,8 +37,8 @@ function changeColor(e) {
             e.target.style.backgroundColor = 'grey';
         } else if ( currentMode === 'randomMode' ) {
             e.target.style.backgroundColor = `rgb(${genRandom()}, ${genRandom()}, ${genRandom()})`;
-        } else if ( currentMode === 'odinMode' ) {
-            e.target.style.backgroundColor = `rgb(${getOdinColor()}% ${getOdinColor()}%, ${getOdinColor()}%)`
+        } else if ( currentMode === 'rubberMode' ) {
+            e.target.style.backgroundColor = 'white';
         }
     }
 }
@@ -66,11 +65,6 @@ function resizeDisplay() {
     const newValue = newUserDisplayValue();
     clearDisplay();
     createTable(newValue);
-}
-
-function getOdinColor() {
-    odinCounter -= 1;
-    return `${odinCounter}`;
 }
 
 function genRandom() {
